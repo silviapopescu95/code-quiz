@@ -25,24 +25,39 @@ function renderQuestion() {
     var currentQuestion = questions[questionIndex];
     questionTitleEl.textContent = currentQuestion.title;
    
-    
-    //render a li for each choice
+    //create each choice as a button
     for (var i = 0; i < questions[questionIndex].choices.length; i++) {
-       
-        var li = document.createElement("li");
+        var li = document.createElement("button");
         li.textContent = questions[questionIndex].choices[i];
         choicesEl.appendChild(li);
-    }
-    
-    //create a button and add a click listener for each choice
-    for (var i = 0; i < questions.choices[i]; i++) {
-        choices[i].createElement("button");
-        choices[i].onclick = answer;
+        li.setAttribute("class", "choice");
+        var input = li.setAttribute("option", questions[questionIndex].choices[i]);
+        var correctAnswer = li.setAttribute("correct-answer", questions[questionIndex].correctAnswer);
+
+        li.onclick = answer;
+        //li.getAttribute("button", addEventListener("click", answer));
+        //li.onclick = answer(input, correctAnswer);
     }
 }
 
-function answer() {
+function answer(input, correctAnswer) {
+    console.log("dick");
     //write a function to tell user if they answered correctly/incorrectly
+    if (input !== correctAnswer) {
+        time = time - 15;
+
+        if (time < 0) {
+            quizEnd();
+        }
+        li.innerHTML = "";
+        questionIndex++;
+        renderQuestion();
+    }
+    else if (input === correctAnswer) {
+        li.innerHTML = "";
+        questionIndex++;
+        renderQuestion();
+    }
 }
 
 function startTimer() {
