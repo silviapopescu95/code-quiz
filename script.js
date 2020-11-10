@@ -1,26 +1,21 @@
-var timerEl = document.getElementById(".time-left");
-var startScreenEl = document.getElementById("#start-screen");
-var startButtonEl = document.getElementById("start-button");
-var questionsEl = document.querySelector(".questions");
-var questionTitleEl = document.getElementById("#question-title");
-var choicesEl = document.getElementById("#choices");
+var timerEl = document.getElementById("time-left");
+var startScreen = document.getElementById("start-screen");
+var startButton = document.getElementById("start-button");
+var questionsEl = document.querySelector("questions");
+var questionTitleEl = document.getElementById("question-title");
+var choicesEl = document.getElementById("choices");
 
 var time = 90;
 var questionIndex = 0;
 
+startButton.onclick = startQuiz;
 
 function startQuiz() {
     //click to move from starting screen to quiz questions
-    //startScreenEl.addEventListener("click", function(event) {
-        //event.preventDefault();
-      //  startScreenEl.style.display = "none";
-    //})
+   startScreen.setAttribute("class", "hide-start-screen")
 
-    //Add class of aria-hidden to startScreen El to hide it
-    startScreenEl.setAttribute("aria-hidden", "true");
-
-    //show questions by removing aria-hidden attribute
-    questionsEl.removeAttribute("aria-hidden");
+    startTimer();
+    
     renderQuestion();
 }
 
@@ -29,13 +24,13 @@ function renderQuestion() {
     //to show question title
     var currentQuestion = questions[questionIndex];
     questionTitleEl.textContent = currentQuestion.title;
+   
     
     //render a li for each choice
-    for (var i = 0; i < questions.choices[i]; i++) {
-        var choicesEl = choices[i];
-
+    for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+       
         var li = document.createElement("li");
-        li.textContent = choicesEl;
+        li.textContent = questions[questionIndex].choices[i];
         choicesEl.appendChild(li);
     }
     
