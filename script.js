@@ -31,30 +31,28 @@ function renderQuestion() {
         li.textContent = questions[questionIndex].choices[i];
         choicesEl.appendChild(li);
         li.setAttribute("class", "choice");
-        var input = li.setAttribute("option", questions[questionIndex].choices[i]);
-        var correctAnswer = li.setAttribute("correct-answer", questions[questionIndex].correctAnswer);
-
+        li.setAttribute("value", questions[questionIndex].choices[i]);
         li.onclick = answer;
-        //li.getAttribute("button", addEventListener("click", answer));
-        //li.onclick = answer(input, correctAnswer);
     }
 }
 
-function answer(input, correctAnswer) {
-    console.log("dick");
+function answer() {
+    console.log(this.value);
     //write a function to tell user if they answered correctly/incorrectly
-    if (input !== correctAnswer) {
+    if (this.value !== questions[questionIndex].correctAnswer) {
+        console.log("wrong answer")
         time = time - 15;
 
         if (time < 0) {
             quizEnd();
         }
-        li.innerHTML = "";
+        choicesEl.innerHTML = ""; //clears away choices from previous questions
         questionIndex++;
         renderQuestion();
     }
-    else if (input === correctAnswer) {
-        li.innerHTML = "";
+    else if (this.value === questions[questionIndex].correctAnswer) {
+        console.log("correct answer")
+        choicesEl.innerHTML = ""; //clears away choices from previous questions
         questionIndex++;
         renderQuestion();
     }
