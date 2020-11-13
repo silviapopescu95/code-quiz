@@ -17,7 +17,7 @@ var questions = [
     },
     {
         title: "Which of the following is NOT a commonly used data type?",
-        choices: ["booleans", "strings", "variables", "propmts"],
+        choices: ["booleans", "strings", "variables", "prompts"],
         correctAnswer: "prompts"
     },
     {

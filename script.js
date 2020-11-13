@@ -4,18 +4,20 @@ var startButton = document.getElementById("start-button");
 var questionsEl = document.querySelector("questions");
 var questionTitleEl = document.getElementById("question-title");
 var choicesEl = document.getElementById("choices");
+var endScreen = document.getElementById("end-screen");
 
+var showTimer;
 var time = 90;
 var questionIndex = 0;
 
 startButton.onclick = startQuiz;
+timerEl.textContent = time;
 
 function startQuiz() {
     //click to move from starting screen to quiz questions
    startScreen.setAttribute("class", "hide-start-screen")
 
-    startTimer();
-    
+    showTimer = setInterval(startTimer, 1000);
     renderQuestion();
 }
 
@@ -65,10 +67,12 @@ function startTimer() {
 
     //keeps timer from going negtive
     if (time <= 0) {
+        clearInterval(showTimer); //stops time from going below zero
         quizEnd();
     }
 }
 
 function quizEnd() {
+    clearInterval(showTimer); //stops time from going below zero
     //displays results when quiz is over
 }
