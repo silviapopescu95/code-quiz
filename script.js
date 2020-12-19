@@ -48,7 +48,7 @@ function answer() {
     console.log(this.value);
     //write a function to tell user if they answered correctly/incorrectly
     if (this.value !== questions[questionIndex].correctAnswer) {
-        console.log("wrong answer")
+        console.log("wrong answer");
         time = time - 15;
 
         if (time <= 0) {
@@ -59,7 +59,7 @@ function answer() {
         renderQuestion();
     }
     else if (this.value === questions[questionIndex].correctAnswer) {
-        console.log("correct answer")
+        console.log("correct answer");
         choicesEl.innerHTML = ""; //clears away choices from previous questions
         questionIndex++;
         renderQuestion();
@@ -87,12 +87,14 @@ function endQuiz() {
     console.log(finalScore.textContent);
 
     //hides title of last question
-    questionTitleEl.setAttribute("class", "hide-questions")
+    questionTitleEl.setAttribute("class", "hide-questions");
+    //hides choices of last question
+    choicesEl.setAttribute("class", "hide-choices");
     
     clearInterval(showTimer); //stops time from going below zero
 
     //displays the end screen
-    endScreen.removeAttribute("class")
+    endScreen.removeAttribute("class");
 
     
     //displays results when quiz is over
@@ -114,7 +116,7 @@ function saveHighscore() {
 
         // push to local storage
         highscores.push(lastUser);
-        window.localStorage.setItem("highscores", highscores);
+        window.localStorage.setItem("highscores", JSON.stringify(highscores));
 
         // Takes user to highscores page
         window.location.href = "highscores.html";
@@ -130,15 +132,19 @@ function showHighscores() {
         return (b.score - a.score);
     });
 
-    // Creates li elements to be appended to ol
-    var addScore = document.createElement("li");
-    addScore.textContent = highscores.initials + ":" + highscores.time;
+        // Creates li elements to be appended to ol
+        var addScore = document.createElement("li");
+        addScore.textContent = initals.initials + ":" + score.time;
 
-    // Append to ol
-    var newScore = document.getElementById("highscores").appendChild(addScore);
+        // Append to ol
+        var newScore = document.getElementById("highscores");
+        newScore.appendChild(addScore);
 }
-// Function call for showHighscores
-showHighscores()
+
+// Function call for saveHighscore
+saveHighscore()
+
+
 
 function clearScores() {
     window.localStorage.removeItem("highscores");
@@ -148,3 +154,6 @@ function clearScores() {
 // submitButton.onclick = saveHighscore;
 // onclick for clearing scores
 document.getElementById("clear-scores").onclick = clearScores;
+
+// Function call for showHighscores
+showHighscores()
