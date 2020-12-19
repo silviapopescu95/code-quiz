@@ -1,3 +1,11 @@
 .hide-start-screen {
     display: none;
 }
+
+.hide-end-screen {
+    display: none;
+}
+
+.hide-questions {
+    display: none;
+}
