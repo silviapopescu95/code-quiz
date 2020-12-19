@@ -10,7 +10,7 @@
 
     <div class="highscores">View Highscores</div>
 
-    <div class="timer">Time Left: <span id="time-left">0</span></div>
+    <div class="timer">Time Left: <span id="time-left"></span></div>
 
     <div class="container">
         <div id="start-screen" class="start-screen">
@@ -22,16 +22,19 @@
         </div>
     </div>
 
-    <div class="questions" aria-hidden="true">
+    <div id="questions">
         <h1 id="question-title"></h1>
         <ul id="choices"></ul>
     </div>
 
     <div class="container">
-        <div id="end-screen" class="end-screen">
+        <div id="end-screen">
             <h1>Coding Quiz Complete!</h1>
             <p>
-                Please enter your initials to save your highscore.
+                Your final score is: <span id="final-score">0</span>
+            </p>
+            <p>
+                Please enter your initials to save your highscore. <input type="text" id="initials">
             </p>
             <button id="submit-button">Submit Score</button>
         </div>
