@@ -5,8 +5,9 @@ var questionsEl = document.getElementById("questions");
 var questionTitleEl = document.getElementById("question-title");
 var choicesEl = document.getElementById("choices");
 var endScreen = document.getElementById("end-screen");
-var submitButton = document.getAnimations("submit-button");
+var submitButton = document.getElementById("submit-button");
 var finalScore = document.getElementById("final-score");
+var initialsEl = document.getElementById("initials");
 
 var showTimer;
 var time = 90;
@@ -14,12 +15,12 @@ var questionIndex = 0;
 
 endScreen.setAttribute("class", "hide-end-screen")
 startButton.onclick = startQuiz;
-//submitButton.onclick = saveHighscore;
+submitButton.onclick = saveHighscore;
 timerEl.textContent = time;
 
 function startQuiz() {
     //click to move from starting screen to quiz questions
-   startScreen.setAttribute("class", "hide-start-screen")
+    startScreen.setAttribute("class", "hide-start-screen")
     //endScreen.setAttribute("class", "hide-end-screen")
 
     showTimer = setInterval(startTimer, 1000);
@@ -41,10 +42,6 @@ function renderQuestion() {
         li.setAttribute("value", questions[questionIndex].choices[i]);
         li.onclick = answer;
     }
-
-    // if (questionIndex === questions.length) {
-    //     endQuiz();
-    // }
 }
 
 function answer() {
@@ -69,7 +66,7 @@ function answer() {
     }
 
     //when the last question is answered..
-    if (questionIndex === questions.length) {
+    if (questionIndex === 4) {
         endQuiz();
     } 
 }
@@ -99,13 +96,55 @@ function endQuiz() {
 
     
     //displays results when quiz is over
-    //var finalScore = document.getElementById("final-score");
     finalScore.textContent = time;    
 }
 
-// function saveHighscore() {
-//     //var initialsEl = document.getElementById("initials");
-//     var initials = document.getElementById("initials").value;
-//     localStorage.setItem("highscore", highscore);
-//     var lastUser = localStorage.getItem("highscores");
-// }
+function saveHighscore() {
+    var initials = initialsEl.value.trim();
+    // Verifies input 
+    if (initials !== "") {
+        // gets saved scores, or creates an array if you're the first user
+        var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+        // Formats score as JSON object
+        var lastUser = {
+            score: time,
+            initials: initials
+        };
+
+        // push to local storage
+        highscores.push(lastUser);
+        window.localStorage.setItem("highscores", highscores);
+
+        // Takes user to highscores page
+        window.location.href = "highscores.html";
+    }
+}
+
+function showHighscores() {
+    // gets saved scores, or creates an array if you're the first user
+    var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+    // Puts scores in descending order
+    highscores.sort(function(a,b) {
+        return (b.score - a.score);
+    });
+
+    // Creates li elements to be appended to ol
+    var addScore = document.createElement("li");
+    addScore.textContent = highscores.initials + ":" + highscores.time;
+
+    // Append to ol
+    var newScore = document.getElementById("highscores").appendChild(addScore);
+}
+// Function call for showHighscores
+showHighscores()
+
+function clearScores() {
+    window.localStorage.removeItem("highscores");
+    window.location.reload();
+}
+
+// submitButton.onclick = saveHighscore;
+// onclick for clearing scores
+document.getElementById("clear-scores").onclick = clearScores;
